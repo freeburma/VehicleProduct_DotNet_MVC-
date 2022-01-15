@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace VehicleProducts.Models
 {
@@ -6,6 +7,7 @@ namespace VehicleProducts.Models
     {
         [Key]
         [Required]
+        [DatabaseGenerated(DatabaseGeneratedOption.Identity)] // Auto Generated primary key
         public int Id { get; set; } 
 
         public string Title { get; set; }

@@ -1,7 +1,15 @@
+using Microsoft.EntityFrameworkCore;
+using VehicleProducts.Db;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
 builder.Services.AddControllersWithViews();
+
+/// <summary>
+/// Adding Dependency Injection for database 
+/// </summary>
+builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDbContext"))); 
 
 var app = builder.Build();
 

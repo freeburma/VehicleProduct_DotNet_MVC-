@@ -25,20 +25,36 @@ h1
     box-shadow: 10px 10px 10px rgba(0, 0, 0, 0.2);
 }
 
-/*
+i 
+{
+    /*display: inline-block;*/ 
+
+    font-size: 20px; 
+    margin-right: 10px; 
+}
+
+
+/* Delete Icon */
+.icon-delete {
+    color: #c12929;
+    /*background: #c12929;*/
+}
+
+.icon-delete i 
+{
+    margin-right: 0; 
+}
+    /*
 ================================================================================
 Detail Page 
 ================================================================================
 */
-.detail-heading
-{
-    margin-top: 40px;
-    font-size: 40px;
-
-    text-transform: uppercase;
-    letter-spacing: 10px;
-    
-}
+    .detail-heading {
+        margin-top: 40px;
+        font-size: 40px;
+        text-transform: uppercase;
+        letter-spacing: 10px;
+    }
 
 .flex-container-detail
 {

@@ -10,7 +10,7 @@ namespace VehicleProducts.Db
 
         }
 
-        public DbSet<VehicleModel> Vehicles { get; set; }
+        public DbSet<VehicleModel> Vehicles { get; set; } = null !; 
 
 
     }// end class DbContext

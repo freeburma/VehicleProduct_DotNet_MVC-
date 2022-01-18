@@ -8,61 +8,61 @@
 
   <ItemGroup>
     <Content Remove="wwwroot\css\style.css" />
-    <Content Remove="wwwroot\images\IMG_4707.JPG" />
-    <Content Remove="wwwroot\images\IMG_4708.JPG" />
-    <Content Remove="wwwroot\images\IMG_4709.JPG" />
-    <Content Remove="wwwroot\images\IMG_4710.JPG" />
-    <Content Remove="wwwroot\images\IMG_4711.JPG" />
-    <Content Remove="wwwroot\images\IMG_4714.JPG" />
-    <Content Remove="wwwroot\images\IMG_4717.JPG" />
-    <Content Remove="wwwroot\images\IMG_4912.JPG" />
-    <Content Remove="wwwroot\images\IMG_4917.JPG" />
-    <Content Remove="wwwroot\images\IMG_4918.JPG" />
-    <Content Remove="wwwroot\images\IMG_4919.JPG" />
-    <Content Remove="wwwroot\images\IMG_4971.JPG" />
-    <Content Remove="wwwroot\images\IMG_4972.JPG" />
-    <Content Remove="wwwroot\images\IMG_4973.JPG" />
-    <Content Remove="wwwroot\images\IMG_5509.JPG" />
-    <Content Remove="wwwroot\images\IMG_5510.JPG" />
-    <Content Remove="wwwroot\images\IMG_5511.JPG" />
-    <Content Remove="wwwroot\images\IMG_5537.JPG" />
-    <Content Remove="wwwroot\images\IMG_5538.JPG" />
-    <Content Remove="wwwroot\images\IMG_5551.JPG" />
-    <Content Remove="wwwroot\images\IMG_5554.JPG" />
-    <Content Remove="wwwroot\images\IMG_5555.JPG" />
-    <Content Remove="wwwroot\images\IMG_5556.JPG" />
-    <Content Remove="wwwroot\images\IMG_5564.JPG" />
-    <Content Remove="wwwroot\images\IMG_5565.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4707.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4708.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4709.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4710.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4711.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4714.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4717.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4912.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4917.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4918.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4919.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4971.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4972.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_4973.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5509.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5510.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5511.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5537.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5538.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5551.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5554.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5555.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5556.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5564.JPG" />
+    <Content Remove="wwwroot\static_images\IMG_5565.JPG" />
     <Content Remove="wwwroot\js\script.js" />
   </ItemGroup>
 
   <ItemGroup>
     <None Include="wwwroot\css\style.css" />
-    <None Include="wwwroot\images\IMG_4707.JPG" />
-    <None Include="wwwroot\images\IMG_4708.JPG" />
-    <None Include="wwwroot\images\IMG_4709.JPG" />
-    <None Include="wwwroot\images\IMG_4710.JPG" />
-    <None Include="wwwroot\images\IMG_4711.JPG" />
-    <None Include="wwwroot\images\IMG_4714.JPG" />
-    <None Include="wwwroot\images\IMG_4717.JPG" />
-    <None Include="wwwroot\images\IMG_4912.JPG" />
-    <None Include="wwwroot\images\IMG_4917.JPG" />
-    <None Include="wwwroot\images\IMG_4918.JPG" />
-    <None Include="wwwroot\images\IMG_4919.JPG" />
-    <None Include="wwwroot\images\IMG_4971.JPG" />
-    <None Include="wwwroot\images\IMG_4972.JPG" />
-    <None Include="wwwroot\images\IMG_4973.JPG" />
-    <None Include="wwwroot\images\IMG_5509.JPG" />
-    <None Include="wwwroot\images\IMG_5510.JPG" />
-    <None Include="wwwroot\images\IMG_5511.JPG" />
-    <None Include="wwwroot\images\IMG_5537.JPG" />
-    <None Include="wwwroot\images\IMG_5538.JPG" />
-    <None Include="wwwroot\images\IMG_5551.JPG" />
-    <None Include="wwwroot\images\IMG_5554.JPG" />
-    <None Include="wwwroot\images\IMG_5555.JPG" />
-    <None Include="wwwroot\images\IMG_5556.JPG" />
-    <None Include="wwwroot\images\IMG_5564.JPG" />
-    <None Include="wwwroot\images\IMG_5565.JPG" />
+    <None Include="wwwroot\static_images\IMG_4707.JPG" />
+    <None Include="wwwroot\static_images\IMG_4708.JPG" />
+    <None Include="wwwroot\static_images\IMG_4709.JPG" />
+    <None Include="wwwroot\static_images\IMG_4710.JPG" />
+    <None Include="wwwroot\static_images\IMG_4711.JPG" />
+    <None Include="wwwroot\static_images\IMG_4714.JPG" />
+    <None Include="wwwroot\static_images\IMG_4717.JPG" />
+    <None Include="wwwroot\static_images\IMG_4912.JPG" />
+    <None Include="wwwroot\static_images\IMG_4917.JPG" />
+    <None Include="wwwroot\static_images\IMG_4918.JPG" />
+    <None Include="wwwroot\static_images\IMG_4919.JPG" />
+    <None Include="wwwroot\static_images\IMG_4971.JPG" />
+    <None Include="wwwroot\static_images\IMG_4972.JPG" />
+    <None Include="wwwroot\static_images\IMG_4973.JPG" />
+    <None Include="wwwroot\static_images\IMG_5509.JPG" />
+    <None Include="wwwroot\static_images\IMG_5510.JPG" />
+    <None Include="wwwroot\static_images\IMG_5511.JPG" />
+    <None Include="wwwroot\static_images\IMG_5537.JPG" />
+    <None Include="wwwroot\static_images\IMG_5538.JPG" />
+    <None Include="wwwroot\static_images\IMG_5551.JPG" />
+    <None Include="wwwroot\static_images\IMG_5554.JPG" />
+    <None Include="wwwroot\static_images\IMG_5555.JPG" />
+    <None Include="wwwroot\static_images\IMG_5556.JPG" />
+    <None Include="wwwroot\static_images\IMG_5564.JPG" />
+    <None Include="wwwroot\static_images\IMG_5565.JPG" />
     <None Include="wwwroot\js\script.js" />
   </ItemGroup>
 
@@ -75,6 +75,10 @@
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
     <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="6.0.1" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="wwwroot\images\" />
   </ItemGroup>
 
 </Project>

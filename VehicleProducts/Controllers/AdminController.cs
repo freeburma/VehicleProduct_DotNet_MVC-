@@ -1,19 +1,22 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; // *** Do not use -> using System.Data.Entity;
 using VehicleProducts.Db;
 using VehicleProducts.Models;
+using VehicleProducts.ViewModels;
 
 namespace VehicleProducts.Controllers
 {
     public class AdminController : Controller
     {
-
         private readonly ProductDbContext _db;
+        private readonly IWebHostEnvironment _webHostEnvironment; // wwwroot folder
 
-        public AdminController(ProductDbContext db)
+
+        public AdminController(ProductDbContext db, IWebHostEnvironment webHostEnvironment)
         {
             _db = db;
-
+            _webHostEnvironment = webHostEnvironment;
         }// end AdminController()
 
         private VehicleModel VehicleModel { get; set; }
@@ -59,10 +62,32 @@ namespace VehicleProducts.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken, ActionName("Add")]
-        public async Task<IActionResult> Add(VehicleModel model)
+        public async Task<IActionResult> Add(VehicleViewModel model)
         {
+            if (! ModelState.IsValid)
+            {
+                return await Task.Run(() => View());
+            }// end if
 
-            return await Task.Run(() => View());
+            var vehicleModel = new VehicleModel();
+            vehicleModel.Title = model.VehicleModel.Title;
+            vehicleModel.ProductDescription = model.VehicleModel.ProductDescription;
+
+            //// File path
+            var filePath = @"\images";          // Hardcoded file path. Should be coming form db. 
+            vehicleModel.FilePath = filePath;
+
+            vehicleModel.ImageName_1 = model.Image_1.FileName; 
+            vehicleModel.StoreDate = DateTime.Now;
+
+            //// Uploading an image on the server
+            
+            UploadFile(model.Image_1);
+
+            await _db.AddAsync(vehicleModel);
+            await _db.SaveChangesAsync(); 
+
+            return await Task.Run(() => RedirectToAction(nameof(Index)));
         }
 
         public async Task<IActionResult> Edit(int? id)
@@ -103,6 +128,34 @@ namespace VehicleProducts.Controllers
 
 
 
+
+        #region Helpers Methods 
+        private async void UploadFile (IFormFile file)
+        {
+
+            //// Checking "images" directory 
+            //if (!Directory.Exists("images"))
+            //{
+            //    Directory.CreateDirectory(imagePath);
+            //}
+
+            var fileName = Path.GetFileName(file.FileName);
+            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileName);
+
+            if ( file != null )
+            {
+                using (var fileStream = new FileStream(filePath, FileMode.Create))
+                {
+                    await file.CopyToAsync(fileStream);
+                    fileStream.Close();
+                }// end using 
+
+            }// end if 
+
+
+             
+        }// end UploadFile()
+        #endregion
 
 
 

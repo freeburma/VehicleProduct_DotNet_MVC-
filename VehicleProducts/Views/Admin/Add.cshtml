@@ -1,4 +1,6 @@
-﻿@model VehicleModel
+﻿@*@model VehicleModel*@
+@model VehicleViewModel
+
 @{
     ViewData["Title"] = "Admin Page - Add";
 }
@@ -6,7 +8,9 @@
 <h3>Admin Page - Add</h3>
 
 <div class="container">
-   @await Html.PartialAsync("~/Views/Partials/Admin/_VehicleForm.cshtml", Model)
+    <form asp-controller="Admin" asp-action="Add" class="was-validated" method="post" enctype="multipart/form-data">
+        @await Html.PartialAsync("~/Views/Partials/Admin/_VehicleForm.cshtml", Model)
+   </form>
     
 </div>
 

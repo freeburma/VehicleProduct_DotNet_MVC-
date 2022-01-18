@@ -26,9 +26,10 @@
                     <td>@Html.DisplayFor(m => @vehicle.FilePath)</td>
                     <td>@Html.DisplayFor(m => @vehicle.ImageName_1)</td>
                     <td>
-                        <a asp-action="Detail"><i class="fas fa-file-alt"></i></a>
-                        <a asp-action="Edit"><i class="fas fa-pencil-alt"></i></a>
-                        <a class="icon-delete" asp-action="Delete"><i class="fas fa-trash-alt"></i></a>
+                        <a asp-action="Detail" data-toggle="Detail" title="Detail" ><i class="fas fa-file-alt"></i></a>
+                        <a asp-action="Add" data-toggle="Add" title="Add" ><i class="fas fa-clipboard-list"></i></a>
+                        <a asp-action="Edit" data-toggle="Edit" title="Edit" ><i class="fas fa-pencil-alt"></i></a>
+                        <a class="icon-delete" asp-action="Delete" data-toggle="Delete" title="Delete" ><i class="fas fa-trash-alt"></i></a>
                     </td>
                 </tr>
             }

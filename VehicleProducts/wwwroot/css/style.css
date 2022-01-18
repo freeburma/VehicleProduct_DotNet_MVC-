@@ -13,7 +13,7 @@ h1
 
 .container.bodyHeight
 {
-    height: calc(100% - 120px);
+    min-height: calc(100vh - 175px);
 
 }
 

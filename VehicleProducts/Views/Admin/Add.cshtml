@@ -1,0 +1,13 @@
+﻿@model VehicleModel
+@{
+    ViewData["Title"] = "Admin Page - Add";
+}
+
+<h3>Admin Page - Add</h3>
+
+<div class="container">
+   @await Html.PartialAsync("~/Views/Partials/Admin/_VehicleForm.cshtml", Model)
+    
+</div>
+
+

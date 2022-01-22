@@ -1,4 +1,6 @@
-﻿@{
+﻿@model IEnumerable<VehicleModel>; 
+
+@{
     ViewData["Title"] = "Home Page";
 }
 
@@ -9,106 +11,31 @@
         <!-- Cards -->
         <div class="row">
 
-            <!-- card 1-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_4707.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">McLaren</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 2-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_4708.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Mini Cooper</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 3-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_4717.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Lamborghini</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 4-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_4919.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Covertte</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 5-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_5537.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Holden Corolado</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 6 -->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_5555.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Range Rover Discovery</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 7-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_4972.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Monster Track</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 8-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_4714.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Ducati</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
-            <!-- card 9-->
-            <div class="col-md-4">
-                <div class="card">
-                    <img class="card-img-top" src="./static_images/IMG_5511.JPG" alt="Card image" style="width:100%">
-                    <div class="card-body">
-                        <h4 class="card-title">Yamaha YZF R3</h4>
-                        <p class="card-text">Lorem ipsum dolor sit amet consectetur adipisicing elit. Aliquid quod vero doloremque quas? Dolores sed explicabo sapiente a alias impedit.</p>
-                        <a asp-controller="detail" asp-action="index" class="btn btn-primary">Detail</a>
-                    </div>
-                </div><!--End card -->
-            </div> <!-- End Col-->
+            @foreach (var vehicle in Model)
+            {
+                <!-- card 1-->
+                <div class="col-md-4">
+                    <div class="card">
+                    @{
+                        //// File path 
+                        string filePath = "./" + vehicle.FilePath + "/" + vehicle.ImageName_1; 
 
+                        //// String concat 
+                        //// TODO: Must move to helper function in the future. 
+                        string productDescriptioConcat = vehicle.ProductDescription.Substring(0, 300) + " ..."; 
+                    }
+                        <img class="card-img-top" src="@filePath" alt="Card image" style="width:100%">
+                        <div class="card-body">
+                            <h4 class="card-title">@vehicle.Title</h4>
+
+                            
+                            <p class="card-text">@productDescriptioConcat</p>
+                            <a asp-controller="home" asp-action="detail" asp-route-id="@vehicle.Id" class="btn btn-primary">Detail</a>
+                        </div>
+                    </div><!--End card -->
+                </div> <!-- End Col-->
+            }
+            
 
         </div><!-- End row -->
     </div><!-- End Container -->

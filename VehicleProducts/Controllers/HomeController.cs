@@ -1,5 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore; 
 using System.Diagnostics;
+using VehicleProducts.Db;
 using VehicleProducts.Models;
 
 namespace VehicleProducts.Controllers
@@ -7,15 +9,20 @@ namespace VehicleProducts.Controllers
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly ProductDbContext _db; 
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, ProductDbContext db)
         {
             _logger = logger;
+            _db = db;   
         }
 
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            return View();
+            List<VehicleModel> vehicleList = await _db.Vehicles.ToListAsync();
+
+
+            return View(vehicleList);
         }
 
         public IActionResult Privacy()

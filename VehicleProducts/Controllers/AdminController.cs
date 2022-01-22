@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; // *** Do not use -> using System.Data.Entity;
+using System.Net.Mime;
 using VehicleProducts.Db;
 using VehicleProducts.Models;
 using VehicleProducts.ViewModels;
@@ -19,7 +20,7 @@ namespace VehicleProducts.Controllers
             _webHostEnvironment = webHostEnvironment;
         }// end AdminController()
 
-        private VehicleModel VehicleModel { get; set; }
+        //private VehicleModel VehicleModel { get; set; }
 
         public async Task<IActionResult> Index()
         {
@@ -50,6 +51,7 @@ namespace VehicleProducts.Controllers
 
         public async Task<IActionResult> Detail(int? id)
         {
+
             return await Task.Run(() => View());
 
         }// end Detail()
@@ -80,8 +82,7 @@ namespace VehicleProducts.Controllers
             vehicleModel.ImageName_1 = model.Image_1.FileName; 
             vehicleModel.StoreDate = DateTime.Now;
 
-            //// Uploading an image on the server
-            
+            //// Uploading an image on the server            
             UploadFile(model.Image_1);
 
             await _db.AddAsync(vehicleModel);
@@ -93,23 +94,95 @@ namespace VehicleProducts.Controllers
         public async Task<IActionResult> Edit(int? id)
         {
 
-            return await Task.Run(() => View());
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }// end if 
+
+            VehicleViewModel vehicleViewModel = new VehicleViewModel();
+
+            var vehicleModel = await _db.Vehicles.FindAsync(id);
+            vehicleViewModel.VehicleModel = vehicleModel;
+
+            //return await Task.Run(() => View(vehicleViewModel));
+            return View(vehicleViewModel);
 
         }// end Edit() -> HTTP_GET
 
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int? id, VehicleModel model)
+        public async Task<IActionResult> Edit(int? id, VehicleViewModel model)
         {
-            return await Task.Run(() => View());
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }// end if 
+
+
+            if (ModelState.IsValid )
+            {
+                var vehicleModel = await _db.Vehicles.FindAsync(id);
+
+                vehicleModel.Title = model.VehicleModel.Title;  
+                vehicleModel.ProductDescription = model.VehicleModel.ProductDescription;
+
+                //// TODO: File Upload is not working yet. 
+                /// *** We can't set file from Controller to View due to the security reasons. 
+                /// *** Never tried to set file through Model. 
+                /// We assume that if the file name is equal, it is the same image. We won't be uploading the image to save CPU resources. 
+                if (model.Image_1 != null)
+                {
+                    //// File path
+                    var filePath = @"images";          // Hardcoded file path. Should be coming form dbin the future. 
+                    
+                    //// Remove the old image
+                    DeleteFile(filePath, vehicleModel.ImageName_1);
+
+                    //// Updating file info in db 
+                    vehicleModel.FilePath = filePath;
+                    vehicleModel.ImageName_1 = model.Image_1.FileName;
+                    vehicleModel.StoreDate = DateTime.Now;
+
+                    //// Uploading an image on the server            
+                    UploadFile(model.Image_1);
+
+                }// end if 
+
+
+                //// Saving it to db
+                _db.Update(vehicleModel);
+                await _db.SaveChangesAsync();
+
+
+            }// end if 
+
+            return RedirectToAction(nameof(Index));
 
         }// end Edit() -> HTTP_POST
 
         public async Task<IActionResult> Delete(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index)); 
+            }
 
-            return await Task.Run(() => View());
+            var vehicleModel = await _db.Vehicles.FirstOrDefaultAsync(m => m.Id == id);
+            
+            if (vehicleModel == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+
+            VehicleViewModel vehicleViewModel = new VehicleViewModel()
+            {
+                VehicleModel = vehicleModel
+            }; 
+
+
+            return await Task.Run(() => View(vehicleViewModel));
 
         }// end Delete() -> HTTP_GET
 
@@ -122,7 +195,20 @@ namespace VehicleProducts.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int? id)
         {
-            return await Task.Run(() => View());
+
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }
+
+            var vehicleModel = await _db.Vehicles.FindAsync(id);
+            _db.Vehicles.Remove(vehicleModel);
+            await _db.SaveChangesAsync();
+            
+
+
+            return RedirectToAction(nameof(Index));
+
 
         }// end Delete() -> HTTP_POST
 
@@ -130,18 +216,22 @@ namespace VehicleProducts.Controllers
 
 
         #region Helpers Methods 
-        private async void UploadFile (IFormFile file)
+        private async void UploadFile (IFormFile file, string directoryPath=@"images")
         {
 
-            //// Checking "images" directory 
-            //if (!Directory.Exists("images"))
-            //{
-            //    Directory.CreateDirectory(imagePath);
-            //}
-
             var fileName = Path.GetFileName(file.FileName);
-            var filePath = Path.Combine(_webHostEnvironment.WebRootPath, fileName);
+            //var filePath = Path.Combine(Path.GetDirectoryName(@"wwwroot/images"),fileName);
+            var filePath = _webHostEnvironment.WebRootPath + "\\" + directoryPath;
 
+            //// Checking "images" directory 
+            if ( ! Directory.Exists(filePath))
+            {
+                Directory.CreateDirectory(filePath);
+            }// end if 
+
+            filePath = filePath + "\\" + fileName;
+
+            //// Creating file 
             if ( file != null )
             {
                 using (var fileStream = new FileStream(filePath, FileMode.Create))
@@ -152,9 +242,67 @@ namespace VehicleProducts.Controllers
 
             }// end if 
 
-
              
         }// end UploadFile()
+
+
+        private FormFile GetFile(string directoryPath, string fileName)
+        {
+
+            var filePath = _webHostEnvironment.WebRootPath + "\\" + directoryPath + "\\" + fileName;
+
+            ContentDisposition contentDisposition = new ContentDisposition()
+            {
+                FileName = fileName,
+                Inline = true
+            };
+
+            var getFileType = fileName.Split(".");
+
+            var ct = new ContentType()
+            {
+                MediaType = "image/" + getFileType[getFileType.Length - 1]
+            };
+
+
+            if (System.IO.File.Exists(filePath))
+            {
+                using (var stream = System.IO.File.OpenRead(filePath))
+                {
+                    var file = new FormFile(stream, 0, stream.Length, fileName, Path.GetFileName(fileName))
+                    {
+                        Headers = new HeaderDictionary(),
+
+                        ContentDisposition = contentDisposition.ToString(),
+                        ContentType = "image/" + getFileType[getFileType.Length - 1],
+                    };
+
+
+                    //file.ContentDisposition = contentDisposition.ToString();
+                    //file.ContentType = ct.ToString(); 
+
+                    return file;
+                }// end using 
+                
+            }
+            else
+            {
+                return null; 
+            }// end if 
+
+        }// end UploadFile()
+
+        private void DeleteFile(string directoryPath, string fileName)
+        {
+            string fullPath = _webHostEnvironment.WebRootPath + "\\" + directoryPath + "\\" + fileName; 
+
+            if (System.IO.File.Exists(fullPath))
+            {
+                System.IO.File.Delete(fullPath);
+            }// end if 
+        }// end DeleteFile()
+
+
         #endregion
 
 

@@ -1,4 +1,7 @@
 ﻿
+@*@model VehicleModel*@
+@model VehicleViewModel
+
 @{
     ViewData["Title"] = "Admin Page - Delete";
 }
@@ -6,8 +9,18 @@
 <h3>Admin Page - Delete</h3>
 
 <div class="container">
-   @await Html.PartialAsync("~/Views/Partials/Admin/_VehicleForm.cshtml")
+    <form asp-controller="Admin" asp-action="Delete" class="was-validated" method="post" enctype="multipart/form-data">
+        @Html.HiddenFor(m => m.VehicleModel.Id)
+
+        @await Html.PartialAsync("~/Views/Partials/Admin/_VehicleForm.cshtml", Model)
+   </form>
     
 </div>
+
+
+
+
+
+
 
 

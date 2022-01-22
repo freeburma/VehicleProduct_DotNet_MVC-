@@ -9,6 +9,7 @@
 
 <div class="container">
     <form asp-controller="Admin" asp-action="Add" class="was-validated" method="post" enctype="multipart/form-data">
+
         @await Html.PartialAsync("~/Views/Partials/Admin/_VehicleForm.cshtml", Model)
    </form>
     

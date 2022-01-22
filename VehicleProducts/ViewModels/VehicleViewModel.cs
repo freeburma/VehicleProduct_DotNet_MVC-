@@ -7,5 +7,6 @@ namespace VehicleProducts.ViewModels
         public VehicleModel? VehicleModel { get; set; }
         public IFormFile? Image_1 { get; set; }
 
+
     }// end class VehicleViewModel
 }

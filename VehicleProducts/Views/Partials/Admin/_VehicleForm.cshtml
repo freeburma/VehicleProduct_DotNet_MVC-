@@ -1,6 +1,7 @@
 ﻿@*@model VehicleModel*@
 @model VehicleViewModel
 
+    @Html.AntiForgeryToken()
 
     <div class="form-group">
         @Html.LabelFor(m => m.VehicleModel.Title)
@@ -12,16 +13,25 @@
         @Html.TextAreaFor(m => m.VehicleModel.ProductDescription, new { @class = "form-control", @rows=5, @cols=15})
     </div>
 
-     
-    
 
     <div class="custom-file mb-3">
-      <input type="file" class="custom-file-input" id="customFile" name="Image_1">
-      <label class="custom-file-label" for="customFile">Choose file</label>
+        @Html.TextBoxFor(m => m.Image_1, new { type = "file", @class = "custom-file-input", @id="customFile"})
+       
+        @*<input type="file" class="custom-file-input" id="customFile" name=Image_1 value="@Model.Image_1" />*@
+          @{
+            //// Getting file status
+            string fileStatus = "Choose file"; 
+            if ( Model != null && ! string.IsNullOrEmpty(Model.VehicleModel.ImageName_1))
+            {
+                fileStatus = Model.VehicleModel.ImageName_1;
+                
+            }// end if 
+        }
+
+        <label class="custom-file-label" for="customFile" >@fileStatus</label>
     </div>
 
     
 
     <button type="submit" class="btn btn-primary">Submit</button>
-
 

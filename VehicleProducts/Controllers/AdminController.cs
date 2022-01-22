@@ -202,6 +202,10 @@ namespace VehicleProducts.Controllers
             }
 
             var vehicleModel = await _db.Vehicles.FindAsync(id);
+
+            //// DON'T FORGET TO DELETE THE IMAGES
+            DeleteFile(vehicleModel.FilePath, vehicleModel.ImageName_1);
+
             _db.Vehicles.Remove(vehicleModel);
             await _db.SaveChangesAsync();
             

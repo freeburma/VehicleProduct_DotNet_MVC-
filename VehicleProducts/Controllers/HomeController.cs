@@ -25,6 +25,14 @@ namespace VehicleProducts.Controllers
             return View(vehicleList);
         }
 
+        public async Task<IActionResult> Detail(int? id)
+        {
+            var vehicle = await _db.Vehicles.FindAsync(id);
+
+
+            return View(vehicle);
+        }
+
         public IActionResult Privacy()
         {
             return View();

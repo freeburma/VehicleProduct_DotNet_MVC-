@@ -1,0 +1,38 @@
+﻿@model VehicleModel
+
+@{
+    ViewData["Title"] = "Detail Page";
+}
+
+
+<div class="container bodyHeight">
+    <div class="row justify-content-center align-items-center">
+        <h4 class="detail-heading">@Model.Title</h4>
+    </div>
+
+    <!-- Card -->
+    <div class="row">
+
+
+        <!-- Detail card-->
+        <div class="flex-container-detail">
+             @{
+                        //// File path 
+                        string filePath = "/" + Model.FilePath + "/" + Model.ImageName_1; 
+            }
+            <div class="imageDetail">
+                <img src="@filePath" alt="@Model.Title">
+            </div>
+
+            <div class="description">
+                @Model.ProductDescription
+
+                <br />
+                <br />
+                <a href="#" class="btn btn-primary">Detail</a>
+
+            </div>
+        </div> <!-- End Col-->
+
+    </div><!-- End row -->
+</div><!-- End Container -->

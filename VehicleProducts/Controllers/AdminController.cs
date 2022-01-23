@@ -51,8 +51,18 @@ namespace VehicleProducts.Controllers
 
         public async Task<IActionResult> Detail(int? id)
         {
+            if (id == null)
+            {
+                return RedirectToAction(nameof(Index));
+            }// end if 
 
-            return await Task.Run(() => View());
+            VehicleViewModel vehicleViewModel = new VehicleViewModel();
+
+            var vehicleModel = await _db.Vehicles.FindAsync(id);
+            vehicleViewModel.VehicleModel = vehicleModel;
+
+            //return await Task.Run(() => View(vehicleViewModel));
+            return View(vehicleViewModel);
 
         }// end Detail()
 
@@ -76,7 +86,7 @@ namespace VehicleProducts.Controllers
             vehicleModel.ProductDescription = model.VehicleModel.ProductDescription;
 
             //// File path
-            var filePath = @"\images";          // Hardcoded file path. Should be coming form db. 
+            var filePath = @"images";          // Hardcoded file path. Should be coming form db. 
             vehicleModel.FilePath = filePath;
 
             vehicleModel.ImageName_1 = model.Image_1.FileName; 

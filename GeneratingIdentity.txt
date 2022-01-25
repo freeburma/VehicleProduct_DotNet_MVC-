@@ -1,0 +1,23 @@
+## Articles to read 
+https://docs.microsoft.com/en-us/aspnet/core/security/authentication/scaffold-identity?view=aspnetcore-6.0&tabs=netcore-cli
+
+## Using Dotnet Core CLI
+1. $ dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+2. $ dotnet tool install -g dotnet-aspnet-codegenerator
+
+3. Required packages 
+dotnet add package Microsoft.VisualStudio.Web.CodeGeneration.Design
+dotnet add package Microsoft.EntityFrameworkCore.Design
+dotnet add package Microsoft.AspNetCore.Identity.EntityFrameworkCore
+dotnet add package Microsoft.AspNetCore.Identity.UI
+dotnet add package Microsoft.EntityFrameworkCore.SqlServer
+dotnet add package Microsoft.EntityFrameworkCore.Tools
+
+4. Looking for Identity scaffolding options 
+dotnet aspnet-codegenerator identity -h
+
+5. dotnet aspnet-codegenerator identity -dc VehicleProducts.Db.ProductDbContext  --files "Account.Register;Account.Login;Account.Logout"
+
+Error: DbContext type 'ProductDbContext' is found but it does not inherit from 'Microsoft.AspNetCore.Identity.EntityFrameworkCore.IdentityDbContext'
+Solution=> <Your_DbContext> : IdentityDbContext
+Description: Your dbContext must inherit from IdentityDbContext

@@ -17,13 +17,19 @@ builder.Services.AddRazorPages(); // missing
 /// <summary>
 /// Adding Dependency Injection for database 
 /// </summary>
+var connectionString = builder.Configuration.GetConnectionString("ProductDbContext");
 
-builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(builder.Configuration.GetConnectionString("ProductDbContext")));
+builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(connectionString));
 
-//builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
-//    .AddEntityFrameworkStores<ProductDbContext>();
-builder.Services.AddIdentity<IdentityUser, IdentityRole>(options => options.SignIn.RequireConfirmedAccount = true)
-    .AddEntityFrameworkStores<ProductDbContext>();
+/// <summary>
+/// Error: An unhandled exception has occurred while executing the request. System.InvalidOperationException: Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UI.Services.IEmailSender' while attempting to activate 'VehicleProducts.Areas.Identity.Pages.Account.RegisterModel'.
+/// Ref: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-6.0
+/// </summary>
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+    .AddRoles<IdentityRole>() // *** DotNet Core 6 => Identity Role 
+    .AddEntityFrameworkStores<ProductDbContext>()
+    .AddDefaultTokenProviders();
+
 
 
 builder.Services.AddControllersWithViews(); 

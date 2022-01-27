@@ -4,6 +4,9 @@ namespace VehicleProducts.Services
 {
 	/// <summary>
 	/// Creating Roles 
+	/// 
+	/// Error:  An unhandled exception has occurred while executing the request.
+    /// System.InvalidOperationException: Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UI.Services.IEmailSender' while attempting to activate 'VehicleProducts.Areas.Identity.Pages.Account.RegisterModel'.
 	/// Reference: https://stackoverflow.com/questions/42188927/how-to-add-custom-roles-to-asp-net-core/42204984#42204984
 	/// </summary>
 	public class RoleServices

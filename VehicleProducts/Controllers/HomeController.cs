@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; 
 using System.Diagnostics;
 using VehicleProducts.Db;
@@ -25,6 +26,7 @@ namespace VehicleProducts.Controllers
             return View(vehicleList);
         }
 
+        //[Authorize(Roles = "Customer")]
         public async Task<IActionResult> Detail(int? id)
         {
             var vehicle = await _db.Vehicles.FindAsync(id);

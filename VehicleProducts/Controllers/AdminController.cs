@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore; // *** Do not use -> using System.Data.Entity;
 using System.Net.Mime;
@@ -8,6 +9,7 @@ using VehicleProducts.ViewModels;
 
 namespace VehicleProducts.Controllers
 {
+    [Authorize(Roles = "Admin")]
     public class AdminController : Controller
     {
         private readonly ProductDbContext _db;
@@ -49,22 +51,22 @@ namespace VehicleProducts.Controllers
             return View(vehicleList);
         }
 
-        public async Task<IActionResult> Detail(int? id)
-        {
-            if (id == null)
-            {
-                return RedirectToAction(nameof(Index));
-            }// end if 
+        //public async Task<IActionResult> Detail(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return RedirectToAction(nameof(Index));
+        //    }// end if 
 
-            VehicleViewModel vehicleViewModel = new VehicleViewModel();
+        //    VehicleViewModel vehicleViewModel = new VehicleViewModel();
 
-            var vehicleModel = await _db.Vehicles.FindAsync(id);
-            vehicleViewModel.VehicleModel = vehicleModel;
+        //    var vehicleModel = await _db.Vehicles.FindAsync(id);
+        //    vehicleViewModel.VehicleModel = vehicleModel;
 
-            //return await Task.Run(() => View(vehicleViewModel));
-            return View(vehicleViewModel);
+        //    //return await Task.Run(() => View(vehicleViewModel));
+        //    return View(vehicleViewModel);
 
-        }// end Detail()
+        //}// end Detail()
 
         public async Task<IActionResult> Add()
         {

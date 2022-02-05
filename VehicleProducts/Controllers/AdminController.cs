@@ -7,6 +7,7 @@ using VehicleProducts.Db;
 using VehicleProducts.Models;
 using VehicleProducts.ViewModels;
 
+#nullable disable
 namespace VehicleProducts.Controllers
 {
     [Authorize(Roles = "Admin")]
@@ -97,8 +98,9 @@ namespace VehicleProducts.Controllers
             //// Uploading an image on the server            
             UploadFile(model.Image_1);
 
-            await _db.AddAsync(vehicleModel);
-            await _db.SaveChangesAsync(); 
+            //await _db.AddAsync(vehicleModel);
+            //await _db.SaveChangesAsync(); 
+            await _db.AddProductAsync(vehicleModel);
 
             return await Task.Run(() => RedirectToAction(nameof(Index)));
         }
@@ -163,8 +165,10 @@ namespace VehicleProducts.Controllers
 
 
                 //// Saving it to db
-                _db.Update(vehicleModel);
-                await _db.SaveChangesAsync();
+                //_db.Update(vehicleModel);
+                //await _db.SaveChangesAsync();
+
+                await _db.UpdateProductAsync(vehicleModel); 
 
 
             }// end if 
@@ -218,8 +222,10 @@ namespace VehicleProducts.Controllers
             //// DON'T FORGET TO DELETE THE IMAGES
             DeleteFile(vehicleModel.FilePath, vehicleModel.ImageName_1);
 
-            _db.Vehicles.Remove(vehicleModel);
-            await _db.SaveChangesAsync();
+            //_db.Vehicles.Remove(vehicleModel);
+            //await _db.SaveChangesAsync();
+
+            await _db.DeleteProductAsync(vehicleModel); 
             
 
 

@@ -10,6 +10,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		GeneratingIdentity.txt = GeneratingIdentity.txt
 	EndProjectSection
 EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "VehicleProducts_xUnitTests", "VehicleProducts_xUnitTests\VehicleProducts_xUnitTests.csproj", "{E85DE20E-3C82-4A55-96E3-91CCB6A8B967}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -20,6 +22,10 @@ Global
 		{F2E2E55F-9D68-4484-B100-747D97F249FD}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F2E2E55F-9D68-4484-B100-747D97F249FD}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F2E2E55F-9D68-4484-B100-747D97F249FD}.Release|Any CPU.Build.0 = Release|Any CPU
+		{E85DE20E-3C82-4A55-96E3-91CCB6A8B967}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{E85DE20E-3C82-4A55-96E3-91CCB6A8B967}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{E85DE20E-3C82-4A55-96E3-91CCB6A8B967}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{E85DE20E-3C82-4A55-96E3-91CCB6A8B967}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

@@ -9,10 +9,10 @@ using Entity Frameworks.
 Main Web Project includes:
 	<li>CRUD Operations</li>
 	<li>Authorizations (Admin and Customer) roles</li>
-<ol>
+</ol>
 
 <ol>
 VehicleProducts_xUnitTests Test Project includes:
 	<li>Constructor Tests</li>
 	<li>Data Access Layer Tests</li>
-<ol>
+</ol>

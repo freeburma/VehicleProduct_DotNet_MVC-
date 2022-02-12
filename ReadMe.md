@@ -20,7 +20,7 @@ VehicleProducts_xUnitTests Test Project includes:
 <p>
 If you prefered antoher flavour in PHP using WordPress Them and Plugin developments. Please visit them Following links. 
 
-<a href="https://www.youtube.com/watch?v=vj1Nqwbe0WI&list=PLDmut58RVgN4UBhUwrW6fQohN4MAhDTlM">YouTube Tutorial</a> <br />
+<a href="https://www.youtube.com/watch?v=vj1Nqwbe0WI&list=PLDmut58RVgN4UBhUwrW6fQohN4MAhDTlM">WordPress Theme and Plugin tutorials on YouTube</a> <br />
 <a href="https://github.com/freeburma/mythemecustomtable">WordPress Theme Development Source Code </a> <br />
 <a href="https://github.com/freeburma/product_custom_table">WordPress Plugin Development Source Code </a> <br />
 </p>

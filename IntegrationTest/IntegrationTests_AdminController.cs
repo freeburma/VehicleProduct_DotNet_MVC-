@@ -39,13 +39,13 @@ namespace IntegrationTest
     public class IntegrationTests_AdminController : IClassFixture<CustomWebApplicationFactory<Program>>
     {
         private readonly CustomWebApplicationFactory<Program> _factory; 
-        private readonly HttpClient _client;
      
 
         /// <summary>
-        /// <see cref="IntegrationTests_AdminController"/> constructor does not allow to include any other parameters. 
+        /// <see cref="IntegrationTests_AdminController"/> will perform Integration Test. 
+        /// We will test all CRUD operations using HTTP GET and POST using <see cref="HttpClient"/>. 
         /// </summary>
-        /// <param name="factory"></param>
+        /// <param name="factory">Custom Web Application Factory which will perform in-memory database.</param>
         public IntegrationTests_AdminController(CustomWebApplicationFactory<Program> factory)
         {
             _factory = factory;
@@ -53,6 +53,13 @@ namespace IntegrationTest
         }// end AdminControllerTests()
 
 
+        #region Test Sample 
+
+        /// <summary>
+        /// <see cref="WebApplicationFactory_SampleTest"/> is the sample test factory. 
+        /// If you don't need <see cref="CustomWebApplicationFactory{T}"/>, you may use as <see cref="WebApplicationFactory_SampleTest"/>. 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task WebApplicationFactory_SampleTest()
         {
@@ -62,37 +69,39 @@ namespace IntegrationTest
                     //// Configure test services 
                     webHostBuilder.ConfigureServices(async services =>
                     {
-                        var dbContext = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ProductDbContext>));
+                    var dbContext = services.SingleOrDefault(d => d.ServiceType == typeof(DbContextOptions<ProductDbContext>));
 
-                        if (dbContext != null) services.Remove(dbContext);
+                    if (dbContext != null) services.Remove(dbContext);
 
-                        //// Adding Dependency Injection and Injection InMemory Db
-                        services.AddDbContext<ProductDbContext>(options =>
+                    //// Adding Dependency Injection and Injection InMemory Db
+                    services.AddDbContext<ProductDbContext>(options =>
+                    {
+                        options.UseInMemoryDatabase("VehicelInMemoryDbForTesting");
+                    });
+
+                    var sp = services.BuildServiceProvider();
+
+                    using (var scope = sp.CreateScope())
+                    {
+                        var scopedServices = scope.ServiceProvider;
+                        var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<Program>>>();
+
+
+                        var db = scopedServices.GetRequiredService<ProductDbContext>();
+
+
+                        try
                         {
-                            options.UseInMemoryDatabase("VehicelInMemoryDbForTesting");
-                        });
-
-                        var sp = services.BuildServiceProvider();
-
-                        using (var scope = sp.CreateScope())
-                        {
-                            var scopedServices = scope.ServiceProvider;
-                            var logger = scopedServices.GetRequiredService<ILogger<CustomWebApplicationFactory<Program>>>();
-
-
-                            var db = scopedServices.GetRequiredService<ProductDbContext>();
-
                             db.Database.EnsureCreated();
-                            await db.AddRangeAsync(DatabaseUtilitiesService.DummyMemoryTestList); 
-                            await db.SaveChangesAsync();    
-                            //try
-                            //{
-                            //    DatabaseUtilitiesService.InitializeDbForTests(db);
-                            //}
-                            //catch (Exception ex)
-                            //{
-                            //    logger.LogError(ex, "An error occurred seeding the " + "database with test messages. Error: {Message}", ex.Message);
-                            //}// end try 
+
+                            await db.AddRangeAsync(DatabaseUtilitiesService.DummyMemoryTestList);
+                            await db.SaveChangesAsync();
+                                
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.LogError(ex, "An error occurred seeding the " + "database with test messages. Error: {Message}", ex.Message);
+                        }// end try 
 
                             string test = ""; 
 
@@ -157,6 +166,10 @@ namespace IntegrationTest
 
         }// end Home_Index_Test()
 
+        #endregion
+
+        #region Authentication and Authorization and CRUD Operations
+
         [Fact]
         public async Task Get_SecurePageRedirectsAnUnauthenticatedUser()
         {
@@ -176,6 +189,10 @@ namespace IntegrationTest
             
         }// end Get_SecurePageRedirectsAnUnauthenticatedUser()
 
+        /// <summary>
+        /// <see cref="Get_IndexAsAnAuthenticated_AdminUser"/> as login admin user. 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Get_IndexAsAnAuthenticated_AdminUser()
         {
@@ -223,8 +240,6 @@ namespace IntegrationTest
                 AllowAutoRedirect = false,
             });
 
-
-
             // Act 
             var response = await client.GetAsync("/Admin/Add");
             var getAddPageData = await response.Content.ReadAsStringAsync(); 
@@ -235,8 +250,7 @@ namespace IntegrationTest
 
         }// end AddProduct_HTTP_GETAsAnAuthenticated_AdminUser()
 
-
-
+        
         [Fact]
         public async Task AdminRedirectTest_HttpPost_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_False()
         {
@@ -265,10 +279,7 @@ namespace IntegrationTest
 
             // Getting Cookie Value from HTTP Header 
             var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
-
-
             var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
-
 
 
             var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/RedirectTest");
@@ -311,10 +322,7 @@ namespace IntegrationTest
 
             // Getting Cookie Value from HTTP Header 
             var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
-
-
             var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
-
 
 
             var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/RedirectTest");
@@ -356,10 +364,7 @@ namespace IntegrationTest
 
             // Getting Cookie Value from HTTP Header 
             var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
-
-
             var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
-
 
 
             var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/Add");
@@ -524,6 +529,7 @@ namespace IntegrationTest
             var serializeData = vehicelViewModel.ToKeyValue();
             // DONOT FORGET to add Antiforgery Value
             serializeData.Add(AntiForgeryTokenExtractor.Field, antiForgeryVal.field); 
+
             httpPostReq.Content = new FormUrlEncodedContent(serializeData);
 
 
@@ -537,6 +543,10 @@ namespace IntegrationTest
 
         }// end EditProduct_HTTP_POST_AsAnAuthenticated_AdminUser()
 
+        /// <summary>
+        /// <see cref="DeleteProduct_HTTP_POST_AsAnAuthenticated_AdminUser"/> will delete item by its ID. 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task DeleteProduct_HTTP_POST_AsAnAuthenticated_AdminUser()
         {
@@ -558,7 +568,6 @@ namespace IntegrationTest
 
 
             var vehicleList = GetVehicelList().Result;
-
 
 
             // Act 
@@ -598,8 +607,11 @@ namespace IntegrationTest
 
         }// end EditProduct_HTTP_POST_AsAnAuthenticated_AdminUser()
 
+        #endregion
+
         #region snippet4 TestAuthHandler
         /// <summary>
+        /// <seealso cref="TestAuthHandler"/> allows you to test the Authentication and Authorization. 
         /// The following class <see cref="TestAuthHandler"/> directly inherited from MicroSoft Documentation. 
         /// 
         /// </summary>
@@ -616,7 +628,7 @@ namespace IntegrationTest
                 var claims = new[] 
                 { 
                     new Claim(ClaimTypes.Name, "Test user"), 
-                    new Claim(ClaimTypes.Role, "Admin")
+                    new Claim(ClaimTypes.Role, "Admin"),    // Admin Role
                 };
                 var identity = new ClaimsIdentity(claims, "Test");
                 var principal = new ClaimsPrincipal(identity);
@@ -627,10 +639,11 @@ namespace IntegrationTest
 
                 return Task.FromResult(result);
             }
-        }
+        }// end class TestAuthHandler
+
         #endregion
 
-
+        #region Get Vehicle List from DbContext
         private async Task<List<VehicleModel>> GetVehicelList ()
         {
             var vehicleList = new List<VehicleModel>();
@@ -645,6 +658,8 @@ namespace IntegrationTest
             return vehicleList;
 
         }// end GetVehicelList ()
+        
+        #endregion
 
     }// end class 
 }

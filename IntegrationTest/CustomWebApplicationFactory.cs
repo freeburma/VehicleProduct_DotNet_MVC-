@@ -26,8 +26,7 @@ namespace IntegrationTest
                 services.Remove(descriptor);
 
                 //// Adding Dependency Injection and Injection InMemory Db
-                //services.AddDbContext<ProductDbContext>(options =>
-                services.AddDbContextPool<ProductDbContext>(options =>
+                services.AddDbContext<ProductDbContext>(options =>
                 {
                     options.UseInMemoryDatabase("VehcielMemobryDb"); 
                 });
@@ -49,10 +48,16 @@ namespace IntegrationTest
                     {
                         db.Database.EnsureCreated();
 
-                        //// Initialize the data
+                        //// *** Note: Async Methods are not woking. So plese try to avoid using it.
                         db.AddRange(DatabaseUtilitiesService.DummyMemoryTestList);
                         db.SaveChanges();
-
+                        
+                        //Task.Run(async () =>
+                        //{
+                        //    //// Initialize the data
+                        //    await db.AddRangeAsync(DatabaseUtilitiesService.DummyMemoryTestList);
+                        //    await db.SaveChangesAsync();
+                        //}); 
 
                     }
                     catch (Exception ex)

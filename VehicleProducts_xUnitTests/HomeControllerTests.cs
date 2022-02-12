@@ -14,7 +14,7 @@ using Xunit;
 
 namespace VehicleProducts_xUnitTests
 {
-    public class ControllerTests
+    public class HomeControllerTests
     {
         /// <summary>
         /// We need to create the Mock dependencies for controller. Read the StackOverflow article at the following link. 
@@ -77,6 +77,66 @@ namespace VehicleProducts_xUnitTests
 
 
         }// end HomeController_Index_Test()
+
+        [Fact]
+        public async void HomeController_Index_Test_2()
+        {
+
+            var db = new ProductDbContext(DatabaseService.TestDbContextOptions()); 
+            
+            //// Arrange 
+            var mockILogger = Mock.Of<ILogger<HomeController>>();
+
+
+            await db.Vehicles.AddRangeAsync(DatabaseService.DummyMemoryTestList);
+            await db.SaveChangesAsync();
+
+            var homeController = new HomeController(mockILogger, db); // *** We need an empty constructor. We don't want to mess up with iLogger and DbContext. 
+
+            //// Act
+            var result = await homeController.Index();
+
+
+            //// Assert 
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var vehicleList = Assert.IsAssignableFrom<IEnumerable<VehicleModel>>(viewResult.ViewData.Model);
+            Assert.Equal(5, vehicleList.Count());
+
+
+
+        }// end HomeController_Index_Test_2()
+
+        [Fact]
+        public async void HomeController_Detail_Test()
+        {
+
+            var db = new ProductDbContext(DatabaseService.TestDbContextOptions());
+
+            //// Arrange 
+            var mockILogger = Mock.Of<ILogger<HomeController>>();
+
+            await db.Vehicles.AddRangeAsync(DatabaseService.DummyMemoryTestList);
+            await db.SaveChangesAsync();
+
+            var homeController = new HomeController(mockILogger, db); // *** We need an empty constructor. We don't want to mess up with iLogger and DbContext. 
+
+
+            //// Act
+            var expectedProduct = db.Vehicles.FirstOrDefault();
+            var result = await homeController.Detail(expectedProduct.Id);
+
+
+            //// Assert 
+            var viewResult = Assert.IsType<ViewResult>(result);
+            var returnProduct = Assert.IsAssignableFrom<VehicleModel>(viewResult.ViewData.Model);
+            Assert.Equal(expectedProduct, returnProduct);
+
+
+
+        }// end HomeController_Detail_Test()
+
+
+
 
 
     }// end class ControllerTests

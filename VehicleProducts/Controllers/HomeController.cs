@@ -42,6 +42,7 @@ namespace VehicleProducts.Controllers
             return View(nameof(Privacy));
         }
 
+      
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {

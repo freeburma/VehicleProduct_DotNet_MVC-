@@ -30,7 +30,12 @@
 						<td>@Html.DisplayFor(m => vehicle.Title)</td>
 						<td>
 							@{
-								string productDescriptioConcat = vehicle.ProductDescription.Substring(0, 100) + " ..."; 
+								string productDescriptioConcat = ""; 
+								if (vehicle.ProductDescription.Length > 100)
+								{
+									productDescriptioConcat = vehicle.ProductDescription.Substring(0, 100) + " ..."; 
+
+								}// end if 
 							}
 							@Html.DisplayFor(m => productDescriptioConcat)
 						</td>

@@ -22,7 +22,12 @@
 
                         //// String concat 
                         //// TODO: Must move to helper function in the future. 
-                        string productDescriptioConcat = vehicle.ProductDescription.Substring(0, 300) + " ..."; 
+
+                        string productDescriptioConcat = ""; 
+                        if (vehicle.ProductDescription.Length > 300)
+                        {
+                            productDescriptioConcat = vehicle.ProductDescription.Substring(0, 300) + " ...";
+                        }// end if 
                     }
                         <img class="card-img-top" src="@filePath" alt="Card image" style="width:100%">
                         <div class="card-body">

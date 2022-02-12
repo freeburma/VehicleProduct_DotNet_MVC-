@@ -92,18 +92,29 @@ namespace VehicleProducts.Controllers
             var filePath = @"images";          // Hardcoded file path. Should be coming form db. 
             vehicleModel.FilePath = filePath;
 
-            vehicleModel.ImageName_1 = model.Image_1.FileName; 
-            vehicleModel.StoreDate = DateTime.Now;
 
-            //// Uploading an image on the server            
-            UploadFile(model.Image_1);
+            if (model.Image_1 != null)
+            {
+                vehicleModel.ImageName_1 = model.Image_1.FileName;
+
+                //// Uploading an image on the server            
+                UploadFile(model.Image_1);
+
+            }// end if 
+
+            vehicleModel.StoreDate = DateTime.Now;
 
             //await _db.AddAsync(vehicleModel);
             //await _db.SaveChangesAsync(); 
             await _db.AddProductAsync(vehicleModel);
 
-            return await Task.Run(() => RedirectToAction(nameof(Index)));
+            //return View(); // Leave here to test HTTP 302 - Found 
+
+            //return Redirect(nameof(Index));
+            return RedirectToAction(nameof(Index));
+
         }
+
 
         public async Task<IActionResult> Edit(int? id)
         {
@@ -188,7 +199,7 @@ namespace VehicleProducts.Controllers
             
             if (vehicleModel == null)
             {
-                return RedirectToAction(nameof(Index));
+                return RedirectToAction(nameof(Index), nameof(AdminController));
             }
 
 
@@ -324,6 +335,24 @@ namespace VehicleProducts.Controllers
             }// end if 
         }// end DeleteFile()
 
+
+
+        public IActionResult RedirectTest_GET()
+        {
+            return RedirectToAction(nameof(Index));
+        }
+
+        public IActionResult RedirectTest()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public IActionResult RedirectTest_GET(int id = 1)
+        {
+            return RedirectToAction(nameof(Index));
+        }
 
         #endregion
 

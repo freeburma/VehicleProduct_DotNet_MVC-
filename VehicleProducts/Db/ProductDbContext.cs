@@ -11,7 +11,20 @@ namespace VehicleProducts.Db
 
         }
 
-        public DbSet<VehicleModel> Vehicles { get; set; } = null !;
+        public DbSet<VehicleModel> Vehicles { get; set; }
+
+        //protected override void OnModelCreating(ModelBuilder builder)
+        //{
+        //    builder.Entity<VehicleModel>()
+        //        .HasData(
+        //                    new VehicleModel() { Title = "Test 1", ProductDescription = "Test 1 Description" },
+        //                    new VehicleModel() { Title = "Test 2", ProductDescription = "Test 2 Description" },
+        //                    new VehicleModel() { Title = "Test 3", ProductDescription = "Test 3 Description" },
+        //                    new VehicleModel() { Title = "Test 4", ProductDescription = "Test 4 Description" },
+        //                    new VehicleModel() { Title = "Test 5", ProductDescription = "Test 5 Description" }
+        //                );
+                
+        //}
 
         #region DB CRUD operations 
 

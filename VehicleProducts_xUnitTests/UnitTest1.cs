@@ -13,7 +13,7 @@ namespace VehicleProducts_xUnitTests
         [Fact]
         public void TestFailed()
         {
-            Assert.Equal(1, 2); 
+            Assert.NotEqual(1, 2); 
         }
     }
 }

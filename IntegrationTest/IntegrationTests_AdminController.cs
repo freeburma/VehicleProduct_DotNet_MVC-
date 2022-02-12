@@ -33,6 +33,12 @@ using static System.Net.Mime.MediaTypeNames;
 /// Articel to Read: Asp.Net Core Integration Testing, publication year 2022 https://code-maze.com/aspnet-core-integration-testing/ 
 /// <see cref="https://github.com/CodeMazeBlog/testing-aspnetcore-mvc/tree/integration-testing-mvc"/>
 /// 
+/// To encounter the HTTP errors such as 400, 404 and 500: 
+///     1. Debug
+///     2. Research 
+///     3. *** Be Patient 
+///     4. Notice the .Net Core Version Changes 
+/// :)
 /// </summary>
 namespace IntegrationTest
 {
@@ -166,10 +172,97 @@ namespace IntegrationTest
 
         }// end Home_Index_Test()
 
+        [Fact]
+        public async Task AdminRedirectTest_HttpPost_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_False()
+        {
+
+
+            // Arrange 
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    services.AddAuthentication("Admin")
+                            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Admin", options => { })
+                            ;
+                });
+
+            })
+            .CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = false });
+
+
+            // Act 
+            var request = await client.GetAsync("/Admin/RedirectTest");
+
+
+            var httpHeader = request.Headers.ToString();
+            var reqContent = await request.Content.ReadAsStringAsync();
+
+            // Getting Cookie Value from HTTP Header 
+            var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
+            var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
+
+
+            var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/RedirectTest");
+            httpPostReq.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.Cookie, antiforgeryCookieValue).ToString());
+
+            var resposne = await client.SendAsync(httpPostReq);
+
+            // Assert 
+            Assert.Equal(HttpStatusCode.OK, request.StatusCode);
+
+
+        }// end AddProduct_HTTP_POST_ValidModel_AsAnAuthenticated_AdminUser()
+
+        [Fact]
+        public async Task AdminRedirectTest_HttpPost_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_TRUE()
+        {
+
+
+            // Arrange 
+            var client = _factory.WithWebHostBuilder(builder =>
+            {
+                builder.ConfigureServices(services =>
+                {
+                    services.AddAuthentication("Admin")
+                            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Admin", options => { })
+                            ;
+                });
+
+            })
+            .CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = true });
+
+
+            // Act 
+            var request = await client.GetAsync("/Admin/RedirectTest");
+
+
+            var httpHeader = request.Headers.ToString();
+            var reqContent = await request.Content.ReadAsStringAsync();
+
+            // Getting Cookie Value from HTTP Header 
+            var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
+            var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
+
+
+            var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/RedirectTest");
+            httpPostReq.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.Cookie, antiforgeryCookieValue).ToString());
+
+            var resposne = await client.SendAsync(httpPostReq);
+
+            // Assert 
+            Assert.Equal(HttpStatusCode.OK, request.StatusCode);
+
+
+        }// end AddProduct_HTTP_POST_ValidModel_AsAnAuthenticated_AdminUser()
+
+
         #endregion
 
         #region Authentication and Authorization and CRUD Operations
 
+
+        #region Authorize User Tests
         [Fact]
         public async Task Get_SecurePageRedirectsAnUnauthenticatedUser()
         {
@@ -220,7 +313,9 @@ namespace IntegrationTest
 
         }// end Get_IndexAsAnAuthenticated_AdminUser()
 
+        #endregion
 
+        #region Add to Db Tests
         [Fact]
         public async Task AddProduct_HTTP_GET_AsAnAuthenticated_AdminUser()
         {
@@ -249,92 +344,6 @@ namespace IntegrationTest
             Assert.Contains("Admin Page - Add", getAddPageData);
 
         }// end AddProduct_HTTP_GETAsAnAuthenticated_AdminUser()
-
-        
-        [Fact]
-        public async Task AdminRedirectTest_HttpPost_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_False()
-        {
-
-
-            // Arrange 
-            var client = _factory.WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureServices(services =>
-                {
-                    services.AddAuthentication("Admin")
-                            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Admin", options => { })
-                            ;
-                });
-
-            })
-            .CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = false });
-
-
-            // Act 
-            var request = await client.GetAsync("/Admin/RedirectTest");
-
-
-            var httpHeader = request.Headers.ToString();
-            var reqContent = await request.Content.ReadAsStringAsync();
-
-            // Getting Cookie Value from HTTP Header 
-            var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
-            var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
-
-
-            var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/RedirectTest");
-            httpPostReq.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.Cookie, antiforgeryCookieValue).ToString());
-
-            var resposne = await client.SendAsync(httpPostReq);
-
-            // Assert 
-            Assert.Equal(HttpStatusCode.OK, request.StatusCode);
-
-
-        }// end AddProduct_HTTP_POST_ValidModel_AsAnAuthenticated_AdminUser()
-
-
-        [Fact]
-        public async Task AdminRedirectTest_HttpPost_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_TRUE()
-        {
-
-
-            // Arrange 
-            var client = _factory.WithWebHostBuilder(builder =>
-            {
-                builder.ConfigureServices(services =>
-                {
-                    services.AddAuthentication("Admin")
-                            .AddScheme<AuthenticationSchemeOptions, TestAuthHandler>("Admin", options => { })
-                            ;
-                });
-
-            })
-            .CreateClient(new WebApplicationFactoryClientOptions() { AllowAutoRedirect = true });
-
-
-            // Act 
-            var request = await client.GetAsync("/Admin/RedirectTest");
-
-
-            var httpHeader = request.Headers.ToString();
-            var reqContent = await request.Content.ReadAsStringAsync();
-
-            // Getting Cookie Value from HTTP Header 
-            var antiforgeryCookieValue = AntiForgeryTokenExtractor.ExtractCookieValue(httpHeader);
-            var antiForgeryVal = await AntiForgeryTokenExtractor.ExtractAntiForgeryValues(antiforgeryCookieValue, reqContent);
-
-
-            var httpPostReq = new HttpRequestMessage(HttpMethod.Post, "/Admin/RedirectTest");
-            httpPostReq.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.Cookie, antiforgeryCookieValue).ToString());
-
-            var resposne = await client.SendAsync(httpPostReq);
-
-            // Assert 
-            Assert.Equal(HttpStatusCode.OK, request.StatusCode);
-
-
-        }// end AddProduct_HTTP_POST_ValidModel_AsAnAuthenticated_AdminUser()
 
         [Fact]
         public async Task AddProduct_HTTP_POST_ValidModel_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_False()
@@ -470,6 +479,10 @@ namespace IntegrationTest
 
         }// end AddProduct_HTTP_POST_ValidModel_AsAnAuthenticated_AdminUser_AllowAutoRedirect_IS_True()
 
+        #endregion
+
+        #region Edit to Db Tests
+
         /// <summary>
         /// TODO: <seealso cref="EditProduct_HTTP_POST_AsAnAuthenticated_AdminUser"/> Haven't Test Yet. 
         /// </summary>
@@ -543,6 +556,10 @@ namespace IntegrationTest
 
         }// end EditProduct_HTTP_POST_AsAnAuthenticated_AdminUser()
 
+        #endregion
+
+        #region Delete to Db Tests
+
         /// <summary>
         /// <see cref="DeleteProduct_HTTP_POST_AsAnAuthenticated_AdminUser"/> will delete item by its ID. 
         /// </summary>
@@ -606,6 +623,7 @@ namespace IntegrationTest
             Assert.DoesNotContain(vehicleModel.Title, responseString);
 
         }// end EditProduct_HTTP_POST_AsAnAuthenticated_AdminUser()
+        #endregion
 
         #endregion
 

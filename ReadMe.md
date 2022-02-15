@@ -35,23 +35,30 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 #### First Time Running 
 
 <ul>
+	<li>
 	<ul>
 		Installing Required Dependencies 
 		<li>$ dotnet tool install --global dotnet-ef </li>
 		<li>$ dotnet tool update --global dotnet-ef</li>
 	</ul>
-
+	</li>
+	
+	<li>
 	<ul>
 		Creating Db and Tables
 		<li>$ dotnet ef migrations add "preparation"</li>
 		<li>$ dotnet ef database update</li>
 		<li></li>
 	</ul>
+	</li>
 
+	<li>
 	<ul>
 		Running the website
 		<li>$ dotnet watch run</li>
 	</ul>
+	</li>
+
 
 </ul>
 <br />

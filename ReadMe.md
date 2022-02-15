@@ -32,7 +32,6 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 
 ### How to run: 
 #### Command Line
-<br />
 #### First Time Running 
 
 <ul>
@@ -42,7 +41,6 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 		<li>$ dotnet tool update --global dotnet-ef</li>
 	</ul>
 
-	<li></li>
 	<ul>
 		Creating Db and Tables
 		<li>$ dotnet ef migrations add "preparation"</li>

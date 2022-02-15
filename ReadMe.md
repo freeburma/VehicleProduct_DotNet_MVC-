@@ -35,28 +35,26 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 #### First Time Running 
 
 <ol>
-	<li> Installing Required Dependencies 
-		<ul>
-			<li>$ dotnet tool install --global dotnet-ef </li>
-			<li>$ dotnet tool update --global dotnet-ef</li>
-		</ul>
-	</li>
+<li> Installing Required Dependencies 
+	<ul>
+		<li>$ dotnet tool install --global dotnet-ef </li>
+		<li>$ dotnet tool update --global dotnet-ef</li>
+	</ul>
+</li>
 	
-	<li> Creating Db and Tables
-		<ul>
-			<li>$ dotnet ef migrations add "preparation"</li>
-			<li>$ dotnet ef database update</li>
-			<li></li>
-		</ul>
-	</li>
+<li> Creating Db and Tables
+	<ul>
+		<li>$ dotnet ef migrations add "preparation"</li>
+		<li>$ dotnet ef database update</li>
+		<li></li>
+	</ul>
+</li>
 
-	<li> Running the website
+<li> Running the website
 	<ul>
 		<li>$ dotnet watch run</li>
 	</ul>
-	</li>
-
-
+</li>
 </ol>
 <br />
 

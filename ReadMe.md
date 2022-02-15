@@ -34,7 +34,7 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 #### Command Line
 #### First Time Running 
 
-<ul>
+<ol>
 	<li> Installing Required Dependencies 
 		<ul>
 			<li>$ dotnet tool install --global dotnet-ef </li>
@@ -57,7 +57,7 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 	</li>
 
 
-</ul>
+</ol>
 <br />
 
 

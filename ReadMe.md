@@ -5,14 +5,14 @@ This project is using Asp.Net Core 6.0 using MVC and MVVM design patterns. This 
 using Entity Frameworks. 
 </p>
 
+### Main Web Project includes:
 <ol>
-Main Web Project includes:
 	<li>CRUD Operations</li>
 	<li>Authorizations (Admin and Customer) roles</li>
 </ol>
 
+#### VehicleProducts_xUnitTests Test Project includes:
 <ol>
-VehicleProducts_xUnitTests Test Project includes:
 	<li>Constructor Tests</li>
 	<li>Data Access Layer Tests</li>
 </ol>
@@ -25,10 +25,41 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 <a href="https://github.com/freeburma/product_custom_table">WordPress Plugin Development Source Code </a> <br />
 </p>
 
-### Expected your skill  
+#### Expected your skill  
 1. Routing 
 2. Visual Studio or VisualStudio Code with Command Line
 3. Entity Framework 
+
+### How to run: 
+#### Command Line
+<br />
+#### First Time Running 
+
+<ul>
+	<ul>
+		Installing Required Dependencies 
+		<li>$ dotnet tool install --global dotnet-ef </li>
+		<li>$ dotnet tool update --global dotnet-ef</li>
+	</ul>
+
+	<li></li>
+	<ul>
+		Creating Db and Tables
+		<li>$ dotnet ef migrations add "preparation"</li>
+		<li>$ dotnet ef database update</li>
+		<li></li>
+	</ul>
+
+	<ul>
+		Running the website
+		<li>$ dotnet watch run</li>
+	</ul>
+
+</ul>
+<br />
+
+
+
 
 ### I will not corver
 1. How to create the development environments such as installing software, database, setting up 

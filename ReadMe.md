@@ -30,9 +30,10 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 2. Visual Studio or VisualStudio Code with Command Line
 3. Entity Framework 
 
-### How to run: 
+### How to run after brach 3-Admin-Controller-01: 
 #### Command Line
-#### First Time Running 
+
+<h3>First Time Running</h3>
 
 <ol>
 <li> Installing Required Dependencies 
@@ -52,13 +53,22 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 
 <li> Running the website
 	<ul>
-		<li>$ dotnet watch run</li>
+		<li>$ dotnet watch run or Press <b> F5 </b> or <b>Run Button</b> on Visual Studio </li>
 	</ul>
 </li>
 </ol>
 <br />
 
+<h3>To Run this project: </h3>
 
+<ol>
+<li> Running the website
+	<ul>
+		<li>$ dotnet watch run or Press <b> F5 </b> or <b>Run Button</b> on Visual Studio </li>
+	</ul>
+</li>
+</ol>
+<br />
 
 
 ### I will not corver

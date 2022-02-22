@@ -18,6 +18,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Logging;
+using VehicleProducts.Services;
 
 namespace VehicleProducts.Areas.Identity.Pages.Account
 {
@@ -28,6 +29,7 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
         private readonly IUserStore<IdentityUser> _userStore;
         private readonly IUserEmailStore<IdentityUser> _emailStore;
         private readonly ILogger<RegisterModel> _logger;
+        private readonly RoleManager<IdentityRole> _roleManager; 
         //private readonly IEmailSender _emailSender;
 
         public RegisterModel(
@@ -35,7 +37,9 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
             IUserStore<IdentityUser> userStore,
             SignInManager<IdentityUser> signInManager,
             ILogger<RegisterModel> logger,
-            IEmailSender emailSender)
+            IEmailSender emailSender,
+            RoleManager<IdentityRole> roleManager
+            )
         {
             _userManager = userManager;
             _userStore = userStore;
@@ -43,6 +47,8 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
             _signInManager = signInManager;
             _logger = logger;
             //_emailSender = emailSender;
+
+            _roleManager = roleManager; 
         }
 
         /// <summary>
@@ -118,11 +124,19 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
+                IdentityResult? roleResult = null;
+
+
                 if (result.Succeeded)
                 {
                     _logger.LogInformation("User created a new account with password.");
 
-                    await _userManager.AddToRoleAsync(user, "Customer"); // Adding role
+
+                    
+                    await RoleServices.GetAndCreateRoles(_roleManager); // Creating the roles if it is not exists
+                    await RoleServices.CreateAdminUser(_userManager);   // Creting the admin user if it not exists 
+
+                    await _userManager.AddToRoleAsync(user, RoleNames.Roles[1]); // Adding role
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

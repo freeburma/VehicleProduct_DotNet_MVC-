@@ -67,6 +67,13 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 		<li>$ dotnet watch run or Press <b> F5 </b> or <b>Run Button</b> on Visual Studio </li>
 	</ul>
 </li>
+<li>
+	<ul>
+		<li>If you jumbs from middle of the tutorial or project (*** Point your git head to "14-BugFixes" or later)</li>
+		<li>Please perfrom all the actions and steps from <b>"First Time Running"</b></li>
+		<li>$ git checkout origin/14-BugFixes or git checkout 14-BugFixes</li>
+	</ul>
+</li>
 </ol>
 <br />
 

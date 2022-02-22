@@ -134,7 +134,7 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
                     await RoleServices.GetAndCreateRoles(_roleManager); // Creating the roles if it is not exists
                     await RoleServices.CreateAdminUser(_userManager);   // Creting the admin user if it not exists 
 
-                    await _userManager.AddToRoleAsync(user, RoleServices.Roles[1]); // Adding "Customer" role
+                    await _userManager.AddToRoleAsync(user, RoleServices.Roles[1]); // Adding "Customer" role to whoever is registering with us
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

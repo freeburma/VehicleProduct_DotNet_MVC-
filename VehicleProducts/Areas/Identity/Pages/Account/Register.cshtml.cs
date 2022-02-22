@@ -124,8 +124,6 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
                 await _emailStore.SetEmailAsync(user, Input.Email, CancellationToken.None);
                 var result = await _userManager.CreateAsync(user, Input.Password);
 
-                IdentityResult? roleResult = null;
-
 
                 if (result.Succeeded)
                 {
@@ -136,7 +134,7 @@ namespace VehicleProducts.Areas.Identity.Pages.Account
                     await RoleServices.GetAndCreateRoles(_roleManager); // Creating the roles if it is not exists
                     await RoleServices.CreateAdminUser(_userManager);   // Creting the admin user if it not exists 
 
-                    await _userManager.AddToRoleAsync(user, RoleNames.Roles[1]); // Adding role
+                    await _userManager.AddToRoleAsync(user, RoleServices.Roles[1]); // Adding "Customer" role
 
                     var userId = await _userManager.GetUserIdAsync(user);
                     var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);

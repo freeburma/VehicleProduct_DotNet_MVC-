@@ -11,7 +11,9 @@ namespace VehicleProducts.Services
 	/// </summary>
 	public class RoleServices
     {
-        public static async Task CreateRoles(IServiceProvider serviceProvider)
+		public static string[] Roles = new string[] { "Admin", "Customer" };
+
+		public static async Task CreateRoles(IServiceProvider serviceProvider)
         {
 			//// Adding custom roles 
 			var roleManager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>(); 
@@ -67,7 +69,7 @@ namespace VehicleProducts.Services
 			IdentityResult? roleResult = null;
 
 
-			foreach (var roleName in RoleNames.Roles)
+			foreach (var roleName in Roles)
 			{
 				var roleExist = await roleManager.RoleExistsAsync(roleName);
 
@@ -105,7 +107,7 @@ namespace VehicleProducts.Services
 				if (createAdminUser.Succeeded)
 				{
 					// Assing the admin role 
-					await userManager.AddToRoleAsync(adminUser, RoleNames.Roles[0]);
+					await userManager.AddToRoleAsync(adminUser, Roles[0]);
 
 				}// end if 
 			}// end if 

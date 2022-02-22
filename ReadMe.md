@@ -15,6 +15,7 @@ using Entity Frameworks.
 <ol>
 	<li>Constructor Tests</li>
 	<li>Data Access Layer Tests</li>
+	<li>Integration Test</li>
 </ol>
 
 <p>
@@ -69,8 +70,8 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 </li>
 <li>
 	<ul>
-		<li>If you jumbs from middle of the tutorial or project (*** Point your git head to "14-BugFixes" or later)</li>
-		<li>Please perfrom all the actions and steps from <b>"First Time Running"</b></li>
+		<li>If you jumps from middle of the tutorial or project (*** Point your git head to "14-BugFixes" or later)</li>
+		<li>Please perform all the actions and steps from <b>"First Time Running"</b></li>
 		<li>$ git checkout origin/14-BugFixes or git checkout 14-BugFixes</li>
 	</ul>
 </li>

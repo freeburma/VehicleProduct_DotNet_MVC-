@@ -76,7 +76,7 @@ namespace VehicleProducts.Controllers
         }// end Add()
 
         [HttpPost]
-        [ValidateAntiForgeryToken, ActionName("Add")]
+        [ValidateAntiForgeryToken]
         public async Task<IActionResult> Add(VehicleViewModel model)
         {
             if (! ModelState.IsValid)
@@ -113,7 +113,7 @@ namespace VehicleProducts.Controllers
             //return Redirect(nameof(Index));
             return RedirectToAction(nameof(Index));
 
-        }
+        }// end Add() -> HTTP POST
 
 
         public async Task<IActionResult> Edit(int? id)

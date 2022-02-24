@@ -5,6 +5,7 @@
 
 ## Ignoring Migration files 
 /VehicleProducts/Migrations
+/VehicleProducts/wwwroot/images
 
 # User-specific files
 *.rsuser

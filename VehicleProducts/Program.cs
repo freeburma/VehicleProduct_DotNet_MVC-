@@ -2,73 +2,121 @@ using Microsoft.EntityFrameworkCore;
 using VehicleProducts.Db;
 using Microsoft.AspNetCore.Identity;
 using VehicleProducts.Services;
+using System.Diagnostics;
+
+var builder = WebApplication.CreateBuilder(args);
+
+//// Add services to the container.
+//builder.Services.AddControllersWithViews();
+
+//// Adding Razor page services 
+builder.Services.AddRazorPages(); // missing
+
+/// <summary>
+/// Adding Dependency Injection for database 
+/// </summary>
+var connectionString = builder.Configuration.GetConnectionString("ProductDbContext");
+builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(connectionString));
+//builder.Services.AddDbContext<ProductDbContext>(options => options.UseInMemoryDatabase("VehicelMemoryDb"));
 
 
-    
 
-    var builder = WebApplication.CreateBuilder(args);
-
-    //// Add services to the container.
-    //builder.Services.AddControllersWithViews();
-
-    //// Adding Razor page services 
-    builder.Services.AddRazorPages(); // missing
-
-    /// <summary>
-    /// Adding Dependency Injection for database 
-    /// </summary>
-    var connectionString = builder.Configuration.GetConnectionString("ProductDbContext");
-
-    builder.Services.AddDbContext<ProductDbContext>(options => options.UseSqlServer(connectionString));
-
-    /// <summary>
-    /// Error: An unhandled exception has occurred while executing the request. System.InvalidOperationException: Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UI.Services.IEmailSender' while attempting to activate 'VehicleProducts.Areas.Identity.Pages.Account.RegisterModel'.
-    /// Ref: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-6.0
-    /// </summary>
-    builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
+/// <summary>
+/// Error: An unhandled exception has occurred while executing the request. System.InvalidOperationException: Unable to resolve service for type 'Microsoft.AspNetCore.Identity.UI.Services.IEmailSender' while attempting to activate 'VehicleProducts.Areas.Identity.Pages.Account.RegisterModel'.
+/// Ref: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/roles?view=aspnetcore-6.0
+/// </summary>
+builder.Services.AddDefaultIdentity<IdentityUser>(options => options.SignIn.RequireConfirmedAccount = true)
         .AddRoles<IdentityRole>() // *** DotNet Core 6 => Identity Role 
         .AddEntityFrameworkStores<ProductDbContext>()
         .AddDefaultTokenProviders();
 
 
-    builder.Services.AddControllersWithViews();
 
-    var app = builder.Build();
 
-    // Configure the HTTP request pipeline.
-    if (!app.Environment.IsDevelopment())
+
+builder.Services.AddControllersWithViews();
+
+var app = builder.Build();
+
+// Configure the HTTP request pipeline.
+if (!app.Environment.IsDevelopment())
+{
+    app.UseExceptionHandler("/Home/Error");
+}
+
+//app.UseHttpsRedirection(); // Redirects HTTP requests to HTTPS.
+app.UseStaticFiles();
+
+app.UseRouting();
+
+//app.UseAuthentication();
+//app.UseAuthorization();
+
+app.MapControllerRoute(
+    name: "default",
+    pattern: "{controller=Home}/{action=Index}/{id?}");
+
+/// <summary>
+/// Adding Role Services
+/// Reference: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-6.0
+/// </summary>
+using (var scope = app.Services.CreateScope())
+{
+    var scopeServices = scope.ServiceProvider;
+    var db = scopeServices.GetRequiredService<ProductDbContext>();
+
+    try
     {
-        app.UseExceptionHandler("/Home/Error");
-    }
+        db.Database.EnsureCreated(); // Database will create automatically if it's on your system. 
 
-    //app.UseHttpsRedirection(); // Redirects HTTP requests to HTTPS.
-    app.UseStaticFiles();
+        //// Adding data from SQL script. 
+        string[] lines = File.ReadAllLines("./DbSchemas/DataSQL.sql");
+        string? sqlToExecute_2 = "";
 
-    app.UseRouting();
-
-    app.UseAuthentication();
-    app.UseAuthorization();
-
-    app.MapControllerRoute(
-        name: "default",
-        pattern: "{controller=Home}/{action=Index}/{id?}");
-
-    /// <summary>
-    /// Adding Role Services
-    /// Reference: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-6.0
-    /// </summary>
-    using (var scope = app.Services.CreateScope())
-    {
-        Task.Run( async () =>
+        foreach (var line in lines)
         {
-            await RoleServices.CreateRoles(scope.ServiceProvider);
-        });
+            //// Reading SQL statements
+            if (!line.ToUpper().StartsWith("GO"))
+            {
+                sqlToExecute_2 += line;
+            }
+            else // If found "GO" statement, execute the SQL command
+            {
+                using (var command = db.Database.GetDbConnection().CreateCommand())
+                {
+                    command.CommandText = sqlToExecute_2;
+                    command.CommandType = System.Data.CommandType.Text;
 
-    }// end using 
+                    db.Database.OpenConnection();
+
+                    var result = command.ExecuteReader();
+
+                }// end using 
+
+                //// Resetting the var to empty to execute next command 
+                sqlToExecute_2 = "";
+
+            }
+
+         }//end foreach
+    }
+    catch
+    {
+
+    }
+    
+
+    Task.Run(async () =>
+    {
+        await RoleServices.CreateRoles(scope.ServiceProvider);
+    });
+
 
     app.MapRazorPages();
 
-    app.Run();
+}// end using 
+
+app.Run();
         
 
-    public partial class Program { }
+public partial class Program { }

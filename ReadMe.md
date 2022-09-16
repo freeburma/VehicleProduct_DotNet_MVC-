@@ -1,4 +1,5 @@
-## Vehicel Products 
+## Vehicle Products - built with ASP.NET CORE 6
+![plot](./DemoResources/NET_Core_Logo.svg.png)
 
 <p>
 This project is using Asp.Net Core 6.0 using MVC and MVVM design patterns. This will include all CRUD operations 

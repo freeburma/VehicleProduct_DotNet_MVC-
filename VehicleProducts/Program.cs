@@ -7,7 +7,7 @@ using System.Diagnostics;
 var builder = WebApplication.CreateBuilder(args);
 
 //// Add services to the container.
-//builder.Services.AddControllersWithViews();
+builder.Services.AddControllersWithViews();
 
 //// Adding Razor page services 
 builder.Services.AddRazorPages(); // missing
@@ -49,17 +49,17 @@ app.UseStaticFiles();
 
 app.UseRouting();
 
-//app.UseAuthentication();
-//app.UseAuthorization();
+app.UseAuthentication();
+app.UseAuthorization();
 
 app.MapControllerRoute(
     name: "default",
     pattern: "{controller=Home}/{action=Index}/{id?}");
 
-/// <summary>
-/// Adding Role Services
-/// Reference: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-6.0
-/// </summary>
+///// <summary>
+///// Adding Role Services
+///// Reference: https://docs.microsoft.com/en-us/aspnet/core/security/authorization/secure-data?view=aspnetcore-6.0
+///// </summary>
 using (var scope = app.Services.CreateScope())
 {
     var scopeServices = scope.ServiceProvider;
@@ -69,7 +69,7 @@ using (var scope = app.Services.CreateScope())
     {
         db.Database.EnsureCreated(); // Database will create automatically if it's on your system. 
 
-        //// Adding data from SQL script. 
+        //// Adding SCHEMAS and DATA from SQL script. 
         string[] lines = File.ReadAllLines("./DbSchemas/DataSQL.sql");
         string? sqlToExecute_2 = "";
 
@@ -98,23 +98,25 @@ using (var scope = app.Services.CreateScope())
 
             }
 
-         }//end foreach
+        }//end foreach
     }
     catch
     {
 
     }
-    
+
 
     Task.Run(async () =>
-    {
+    {   
         await RoleServices.CreateRoles(scope.ServiceProvider);
     });
 
-
-    app.MapRazorPages();
-
 }// end using 
+
+
+
+app.MapRazorPages();
+
 
 app.Run();
         

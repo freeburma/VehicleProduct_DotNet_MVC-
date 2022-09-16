@@ -78,8 +78,26 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 </ol>
 <br />
 
+### LogIn User Names and Passwords 
+<p>
+Use these user names and password as default. These emails are imaginary email. DO NOT TRY TO SEND EMAILS TO THEM. 
+</p>
+#### Admin 
+admin@gmail.com
+<br />
+$Password1234
+<br />
+<br />
 
-### I will not corver
+#### Customer 
+customer_1@gmail.com
+<br />
+$Password1234
+<br />
+<br />
+
+
+### I will not cover
 1. How to create the development environments such as installing software, database, setting up 
 development environments. If you haven't set up the development environments, please go to "Requirements"
 section and make sure you 

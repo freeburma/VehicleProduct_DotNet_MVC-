@@ -15,7 +15,7 @@ using Entity Frameworks.
 <ol>
 	<li>Constructor Tests</li>
 	<li>Data Access Layer Tests</li>
-	<li>Integration Test</li>
+	<li>Integration Tests</li>
 </ol>
 
 <p>

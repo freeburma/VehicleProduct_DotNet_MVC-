@@ -6,6 +6,10 @@ This project is using Asp.Net Core 6.0 using MVC and MVVM design patterns. This 
 using Entity Frameworks. 
 </p>
 
+<p>
+This project should create the database schemas and insert data automatically without calling <b>Entity Framework</b>. 
+</p>
+
 ### Main Web Project includes:
 <ol>
 	<li>CRUD Operations</li>
@@ -20,7 +24,7 @@ using Entity Frameworks.
 </ol>
 
 <p>
-If you prefered antoher flavour in PHP using WordPress Them and Plugin developments. Please visit them Following links. 
+If you preferred another flavour in PHP using WordPress Them and Plugin developments. Please visit them Following links. 
 
 <a href="https://www.youtube.com/watch?v=vj1Nqwbe0WI&list=PLDmut58RVgN4UBhUwrW6fQohN4MAhDTlM">WordPress Theme and Plugin tutorials on YouTube</a> <br />
 <a href="https://github.com/freeburma/mythemecustomtable">WordPress Theme Development Source Code </a> <br />
@@ -83,6 +87,7 @@ If you prefered antoher flavour in PHP using WordPress Them and Plugin developme
 <p>
 Use these user names and password as default. These emails are imaginary email. DO NOT TRY TO SEND EMAILS TO THEM. 
 </p>
+
 #### Admin 
 admin@gmail.com
 <br />

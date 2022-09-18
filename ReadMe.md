@@ -89,14 +89,14 @@ Use these user names and password as default. These emails are imaginary email. 
 </p>
 
 #### Admin 
-admin@gmail.com
+admin@youremail.com
 <br />
 $Password1234
 <br />
 <br />
 
 #### Customer 
-customer_1@gmail.com
+customer_1@youremail.com
 <br />
 $Password1234
 <br />

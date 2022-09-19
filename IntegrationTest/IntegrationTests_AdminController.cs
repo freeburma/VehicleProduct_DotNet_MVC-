@@ -263,6 +263,11 @@ namespace IntegrationTest
 
 
         #region Authorize User Tests
+        /// <summary>
+        /// <see cref="Get_SecurePageRedirectsAnUnauthenticatedUser"/>  
+        /// If you haven't login as the admin user, it will redirect to the login page. 
+        /// </summary>
+        /// <returns></returns>
         [Fact]
         public async Task Get_SecurePageRedirectsAnUnauthenticatedUser()
         {
@@ -537,9 +542,10 @@ namespace IntegrationTest
 
             VehicleViewModel vehicelViewModel = new VehicleViewModel(); 
             vehicelViewModel.VehicleModel = vehicleModel;
-            
-            
-            var serializeData = vehicelViewModel.ToKeyValue();
+
+            /// Serialize object to JSON format which can achieves by ObjectExtensions <seealso cref="ObjectExtensions"/>.
+            var serializeData = vehicelViewModel.ToKeyValue(); 
+
             // DONOT FORGET to add Antiforgery Value
             serializeData.Add(AntiForgeryTokenExtractor.Field, antiForgeryVal.field); 
 
@@ -603,7 +609,7 @@ namespace IntegrationTest
             httpPostReq.Headers.Add("Cookie", new CookieHeaderValue(AntiForgeryTokenExtractor.Cookie, antiforgeryCookieValue).ToString());
 
 
-            //// Converting objec to Dictionary
+            //// Converting object to Dictionary
             //// Ref: https://stackoverflow.com/questions/11576886/how-to-convert-object-to-dictionarytkey-tvalue-in-c
 
             var antiforgeryToken = new Dictionary<string, string>()

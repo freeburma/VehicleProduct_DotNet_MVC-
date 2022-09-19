@@ -10,6 +10,7 @@ using System.Threading.Tasks;
 namespace IntegrationTest.Services
 {
     /// <summary>
+    /// This <seealso cref="AntiForgeryTokenExtractor"/> class will extract AntriForgeryToken from HTTP header.  
     /// The <seealso cref="AntiForgeryTokenExtractor"/> is mostly extracted from <see cref=" https://github.com/yogyogi/ASP.NET-Core-Unit-Testing-with-xUnit.git"/>. 
     /// </summary>
     public static class AntiForgeryTokenExtractor

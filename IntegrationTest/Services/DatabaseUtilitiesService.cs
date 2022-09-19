@@ -19,15 +19,6 @@ namespace IntegrationTest.Services
     public static class DatabaseUtilitiesService
     {
 
-        #region DB CRUD operations 
-
-        
-
-        #endregion
-
-
-       
-
         //// Creatting new list
         public static List<VehicleModel> DummyMemoryTestList = new List<VehicleModel>()
         {

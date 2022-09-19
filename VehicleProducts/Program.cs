@@ -10,7 +10,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllersWithViews();
 
 //// Adding Razor page services 
-builder.Services.AddRazorPages(); // missing
+builder.Services.AddRazorPages(); 
 
 /// <summary>
 /// Adding Dependency Injection for database 

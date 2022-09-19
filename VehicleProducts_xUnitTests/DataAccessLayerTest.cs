@@ -95,16 +95,6 @@ namespace VehicleProducts_xUnitTests
         [Fact]
         public async Task AddingProductListAsync_ProductListIsAdded()
         {
-            //// Creatting new list
-            //List<VehicleModel> DummyMemoryTestList = new List<VehicleModel>()
-            //{
-            //    new VehicleModel() { Title = "Test 1", ProductDescription = "Test 1 Description"},
-            //    new VehicleModel() { Title = "Test 2", ProductDescription = "Test 2 Description"},
-            //    new VehicleModel() { Title = "Test 3", ProductDescription = "Test 3 Description"},
-            //    new VehicleModel() { Title = "Test 4", ProductDescription = "Test 4 Description"},
-            //    new VehicleModel() { Title = "Test 5", ProductDescription = "Test 5 Description"},
-            //}; 
-
             using (var db = new ProductDbContext(DatabaseService.TestDbContextOptions()))
             {
                 //// Arrange 

@@ -33,7 +33,7 @@ namespace VehicleProducts.Services
 			}// end foreach 
 
 			// Preparing to create an admin user 
-			string adminUserEmail = "hello@gmail.com"; 
+			string adminUserEmail = "admin@youremail.com"; 
 			string adminUserPassword = "$Password1234"; 
 			var adminUser = new IdentityUser
 			{
